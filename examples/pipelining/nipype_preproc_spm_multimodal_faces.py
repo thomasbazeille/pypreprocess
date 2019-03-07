@@ -61,7 +61,7 @@ hfcut = 128.
 first_level_effects_maps = []
 mask_images = []
 design_matrices = []
-for x in xrange(2):
+for x in range(2):
     if not os.path.exists(subject_data.output_dir):
         os.makedirs(subject_data.output_dir)
 
@@ -91,7 +91,7 @@ _, matrix, names = check_design_matrix(design_matrix)
 contrasts = {}
 n_columns = len(names)
 contrast_matrix = np.eye(n_columns)
-for i in xrange(2):
+for i in range(2):
     contrasts[names[2 * i]] = contrast_matrix[2 * i]
 
 # more interesting contrasts
@@ -120,7 +120,7 @@ for contrast_id, contrast_val in contrasts.items():
         [contrast_val] * 2, contrast_name=contrast_id, output_z=True,
         output_stat=True, output_effects=True, output_variance=True)
     for map_type, out_map in zip(['z', 't', 'effects', 'variance'],
-                              [z_map, t_map, effects_map, var_map]):
+                                 [z_map, t_map, effects_map, var_map]):
         map_dir = os.path.join(
             subject_data.output_dir, '%s_maps' % map_type)
         if not os.path.exists(map_dir):

@@ -47,9 +47,9 @@ def demo_random_brain(output_dir, n_rows=62, n_columns=40, n_slices=10,
 
 
 def demo_sinusoidal_mixture(output_dir, n_slices=10, n_rows=3, n_columns=2,
-                          introduce_artefact_in_these_volumes=None,
-                          artefact_std=4.,
-                          white_noise_std=1e-2):
+                            introduce_artefact_in_these_volumes=None,
+                            artefact_std=4.,
+                            white_noise_std=1e-2):
     """STC for time phase-shifted sinusoidal mixture in the presence of
     white-noise and volume-specific artefacts. This is supposed to be a
     BOLD time-course from a single voxel.
@@ -102,14 +102,14 @@ def demo_sinusoidal_mixture(output_dir, n_slices=10, n_rows=3, n_columns=2,
     slice_TR = 1. * TR / n_slices
     time_shift = slice_indices * slice_TR
     shifted_acquisition_time = np.array([tau + acquisition_time
-                                     for tau in time_shift])
+                                         for tau in time_shift])
 
     # acquire the signal at the corrupt sampled time points
     acquired_signal = np.array([
-            [[my_sinusoid(shifted_acquisition_time[j])
-              for j in xrange(n_slices)]
-             for _ in xrange(n_columns)] for _ in xrange(n_rows)]
-                               )
+        [[my_sinusoid(shifted_acquisition_time[j])
+          for j in range(n_slices)]
+         for _ in range(n_columns)] for _ in range(n_rows)]
+    )
 
     # add white noise
     acquired_signal += white_noise_std * np.random.randn(
@@ -130,9 +130,9 @@ def demo_sinusoidal_mixture(output_dir, n_slices=10, n_rows=3, n_columns=2,
     introduce_artefact_in_these_volumes = np.array(
         introduce_artefact_in_these_volumes, dtype=int) % n_scans
     acquired_signal[:, :, :, introduce_artefact_in_these_volumes
-                ] += artefact_std * np.random.randn(
-                    n_rows, n_columns, n_slices,
-                    len(introduce_artefact_in_these_volumes))
+                    ] += artefact_std * np.random.randn(
+        n_rows, n_columns, n_slices,
+        len(introduce_artefact_in_these_volumes))
 
     # fit STC
     stc = STC()
@@ -211,12 +211,12 @@ def demo_HRF(output_dir, n_slices=10,
     slice_TR = 1. * TR / n_slices
     time_shift = slice_indices * slice_TR
     shifted_acquisition_time = np.array([tau + acquisition_time
-                                     for tau in time_shift])
+                                         for tau in time_shift])
 
     # acquire the signal at the corrupt sampled time points
     acquired_sample = np.array([np.vectorize(compute_hrf)(
-                shifted_acquisition_time[j])
-                                for j in xrange(n_slices)])
+        shifted_acquisition_time[j])
+        for j in range(n_slices)])
     acquired_sample = np.array([acquired_sample, ] * n_columns)
     acquired_sample = np.array([acquired_sample, ] * n_rows)
 
@@ -273,7 +273,7 @@ def _fmri_demo_runner(output_dir, subjects, dataset_id,
             data = np.ndarray(tuple(list(_first.shape[:3]
                                          ) + [n_scans]))
             data[..., 0] = _first
-            for scan in xrange(1, n_scans):
+            for scan in range(1, n_scans):
                 data[..., scan] = _load_fmri(fmri_files[scan])
 
             return data
@@ -287,8 +287,8 @@ def _fmri_demo_runner(output_dir, subjects, dataset_id,
             os.makedirs(subject_data.output_dir)
 
         print("%sSlice-Timing Correction for %s (%s)" % ('\t',
-                                                   subject_data.subject_id,
-                                                   dataset_id))
+                                                         subject_data.subject_id,
+                                                         dataset_id))
 
         # instantiate corrector
         stc = fMRISTC(**spm_slice_timing_kwargs)

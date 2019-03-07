@@ -74,13 +74,14 @@ def _set_templates(spm_dir=SPM_DIR):
     WM_TEMPLATE = os.path.join(SPM_DIR, tpm_path, 'white.nii')
     CSF_TEMPLATE = os.path.join(SPM_DIR, tpm_path, 'csf.nii')
 
+
 # extention of web-related files (increment this as we support more
 # and more file extensions for web business)
 WEBBY_EXTENSION_PATTERN = ".*\.(?:png|jpeg|html|php|css|txt|rst|js|gif)$"
 
 
 def get_nipype_report_filename(
-    output_files_or_dir):
+        output_files_or_dir):
     if isinstance(output_files_or_dir, _basestring):
         if os.path.isdir(output_files_or_dir):
             return os.path.join(output_files_or_dir,
@@ -116,7 +117,7 @@ def generate_preproc_undergone_docstring(
     command_line=None,
     details_filename=None,
     has_func=True,
-    ):
+):
     """
     Generates a brief description of the pipeline used in the preprocessing.
 
@@ -182,21 +183,21 @@ def generate_preproc_undergone_docstring(
             "acquired simultaneously, an crucial assumption for any further "
             "analysis of the data (GLM, ICA, etc.). "
             "</li>"
-            )
+        )
     if realign:
         preproc_undergone += (
             "<li>"
             "Motion correction has been done so as to estimate, and then "
             "correct for, subject's head motion."
             "</li>"
-            )
+        )
     if coregister:
         preproc_undergone += "<li>"
         if coreg_func_to_anat:
             preproc_undergone += (
                 "The subject's functional images have been coregistered "
                 "to their anatomical image."
-                )
+            )
         else:
             preproc_undergone += (
                 "The subject's anatomical image has been coregistered "
@@ -221,7 +222,8 @@ def generate_preproc_undergone_docstring(
             if has_func:
                 salt = (" The same deformations have been "
                         'applied to the functional images.')
-            else: salt = ""
+            else:
+                salt = ""
             preproc_undergone += (
                 "<li>"
                 "The segmented anatomical image has been warped "
@@ -273,7 +275,7 @@ def generate_preproc_undergone_docstring(
             "</li>") % DARTEL_URL
     if normalize or dartel:
         if (not func_write_voxel_sizes is None or
-            not anat_write_voxel_sizes is None):
+                not anat_write_voxel_sizes is None):
             preproc_undergone += "<li>"
             sep = ""
             if not func_write_voxel_sizes is None:
@@ -287,7 +289,7 @@ def generate_preproc_undergone_docstring(
                     "%sThe output anatomical image has been re-written with "
                     "voxel "
                     "size %smm x %smm x %smm.") % tuple([sep] + list(
-                    anat_write_voxel_sizes))
+                        anat_write_voxel_sizes))
             preproc_undergone += "</li>"
 
     if additional_preproc_undergone:
@@ -360,8 +362,8 @@ def export_report(src, tag="", make_archive=True):
         return re.match(WEBBY_EXTENSION_PATTERN, f)
 
     def ignore_these(folder, files):
-        return [f for f in files if \
-                    (os.path.isfile(
+        return [f for f in files if
+                (os.path.isfile(
                     os.path.join(folder, f)) and not check_extension(f))]
 
     # sanity
@@ -608,7 +610,7 @@ def generate_segmentation_thumbnails(
         mean_normalized_file = os.path.join(output_dir,
                                             "%s.nii" % brain)
         compute_mean_3D_image(normalized_files,
-                           output_filename=mean_normalized_file)
+                              output_filename=mean_normalized_file)
         normalized_file = mean_normalized_file
     output = {}
 
@@ -622,7 +624,7 @@ def generate_segmentation_thumbnails(
     if execution_log_html_filename:
         thumb_desc += (" (<a href=%s>see execution "
                        "log</a>)") % (os.path.basename(
-                execution_log_html_filename))
+                           execution_log_html_filename))
     _brain = "(%s) %s" % (comments, brain) if comments else brain
 
     # plot contours of template compartments on subject's brain
@@ -685,7 +687,7 @@ def generate_segmentation_thumbnails(
             csf_filename=subject_csf_file, cmap=cmap, close=True,
             output_filename=subject_compartments_contours,
             title=("%s TPM contours on "
-               "subject's %s") % (title_prefix, _brain))
+                   "subject's %s") % (title_prefix, _brain))
 
         # create thumbnail
         if results_gallery:
@@ -802,7 +804,7 @@ def generate_realignment_thumbnails(
         thumbnail.description = "Motion Correction"
         if not execution_log_html_filename is None:
             thumbnail.description += (" (<a href=%s>see execution "
-            "log</a>)") % os.path.basename(
+                                      "log</a>)") % os.path.basename(
                 execution_log_html_filename)
         results_gallery.commit_thumbnails(thumbnail)
         output['rp_plot'] = rp_plot
@@ -869,11 +871,10 @@ def generate_stc_thumbnails(original_bold, st_corrected_bold, output_dir,
                                        'stc_plot_%s.png' % session_id)
         pl.figure()
         pl.plot(o_ts, 'o-')
-        pl.hold('on')
         pl.plot(stc_ts, 's-')
         pl.legend(('original BOLD', 'ST corrected BOLD'))
         pl.title("session %s: STC QA for voxel (%s, %s, %s)" % (
-                session_id, voxel[0], voxel[1], voxel[2]))
+            session_id, voxel[0], voxel[1], voxel[2]))
         pl.xlabel('time (TR)')
 
         pl.savefig(output_filename, bbox_inches="tight", dpi=200)
@@ -884,13 +885,13 @@ def generate_stc_thumbnails(original_bold, st_corrected_bold, output_dir,
         if results_gallery:
             thumbnail = Thumbnail()
             thumbnail.a = a(href=os.path.basename(
-                    output_filename))
+                output_filename))
             thumbnail.img = img(src=os.path.basename(
-                    output_filename), height="250px", width="600px")
+                output_filename), height="250px", width="600px")
             thumbnail.description = "Slice-Timing Correction"
             if not execution_log_html_filename is None:
                 thumbnail.description += (" (<a href=%s>see execution "
-                "log</a>)") % os.path.basename(
+                                          "log</a>)") % os.path.basename(
                     execution_log_html_filename)
 
             results_gallery.commit_thumbnails(thumbnail)
@@ -959,7 +960,7 @@ def generate_subject_preproc_report(
         segment=did_segment,
         normalize=did_normalize,
         additional_preproc_undergone=additional_preproc_undergone,
-        )
+    )
 
     report_log_filename = os.path.join(
         output_dir, 'report_log.html')
@@ -1004,19 +1005,19 @@ def generate_subject_preproc_report(
 
     # html markup
     preproc = get_subject_report_preproc_html_template(
-        ).substitute(
+    ).substitute(
         conf_path=conf_path,
         results=results_gallery,
         start_time=time.ctime(),
         preproc_undergone=preproc_undergone,
         subject_id=subject_id,
-        )
+    )
     main_html = get_subject_report_html_template(
-        ).substitute(
+    ).substitute(
         conf_path=conf_path,
         start_time=time.ctime(),
         subject_id=subject_id
-        )
+    )
 
     with open(report_preproc_filename, 'w') as fd:
         fd.write(str(preproc))
@@ -1042,7 +1043,7 @@ def generate_subject_preproc_report(
             output_dir,
             sessions=sessions,
             results_gallery=results_gallery,
-            )
+        )
 
     # generate coreg thumbs
     if did_coreg:
@@ -1053,7 +1054,7 @@ def generate_subject_preproc_report(
             (source, source_brain),
             output_dir,
             results_gallery=results_gallery,
-            )
+        )
 
     # generate epi normalization thumbs
     if did_normalize:
@@ -1072,7 +1073,7 @@ def generate_subject_preproc_report(
             cmap=pl.cm.nipy_spectral,
             brain="EPI",
             results_gallery=results_gallery,
-            )
+        )
         final_thumbnail.img.src = seg_thumbs['axial']
 
         # generate anat normalization thumbs
@@ -1092,7 +1093,7 @@ def generate_subject_preproc_report(
                 cmap=pl.cm.gray,
                 brain="anat",
                 results_gallery=results_gallery,
-                )
+            )
 
     # generate tsdiffana plots
     if tsdiffana:
@@ -1120,7 +1121,7 @@ def make_nipype_execution_log_html(nipype_output_files,
         output_dir,
         '%s%sexecution_log.html' % (
             node_name, "_%s_" % brain_name if brain_name else "")
-        )
+    )
 
     open(execution_log_html_filename, 'w').write(
         execution_log)

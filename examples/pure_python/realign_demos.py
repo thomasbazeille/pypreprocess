@@ -58,7 +58,7 @@ def _demo_runner(subjects, dataset_id, **spm_realign_kwargs):
 
         # plot results
         for sess, rp_filename in zip(
-                xrange(len(mrimc.realignment_parameters_)),
+                range(len(mrimc.realignment_parameters_)),
                 mrimc.realignment_parameters_):
             plot_spm_motion_parameters(
                 rp_filename,
@@ -85,8 +85,8 @@ def demo_nyu_rest(output_dir):
     session = 1
     session_func = [x for x in nyu_data.func if "session%i" % session in x]
     for subject_id in set([os.path.basename(
-                os.path.dirname
-                (os.path.dirname(x))) for x in session_func]):
+            os.path.dirname
+            (os.path.dirname(x))) for x in session_func]):
         # set func
         func = [
             x for x in session_func if subject_id in x]
@@ -154,6 +154,7 @@ def demo_spm_auditory(output_dir):
                             func=[spm_auditory.func],
                             output_dir=os.path.join(output_dir, subject_id))]
     _demo_runner(subjects, "SPM single-subject Auditory")
+
 
 if __name__ == '__main__':
 

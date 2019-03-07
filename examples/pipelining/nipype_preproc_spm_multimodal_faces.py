@@ -138,6 +138,7 @@ for contrast_id, contrast_val in contrasts.items():
 anat_img = nibabel.load(subject_data.anat)
 stats_report_filename = os.path.join(subject_data.output_dir, "reports",
                                      "report_stats.html")
+'''
 generate_subject_stats_report(
     stats_report_filename, contrasts, z_maps, fmri_glm.masker_.mask_img_,
     anat=anat_img, threshold=2.3, cluster_th=15,
@@ -148,3 +149,4 @@ generate_subject_stats_report(
     drift_model=drift_model, hrf_model=hrf_model)
 ProgressReport().finish_dir(subject_data.output_dir)
 print("Statistic report written to %s\r\n" % stats_report_filename)
+'''

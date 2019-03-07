@@ -48,7 +48,7 @@ subject_data = SubjectData(
     anat=subject_data.anat, trials_ses1=subject_data.trials_ses1,
     trials_ses2=subject_data.trials_ses2, session_ids=["Session1", "Session2"])
 subject_data = do_subject_preproc(subject_data, realign=True, coregister=True,
-                                  segment=True, normalize=True)
+                                  segment=True, normalize=True, report=False)
 
 # experimental paradigm meta-params
 stats_start_time = time.ctime()

@@ -68,7 +68,6 @@ subject_data.output_dir = os.path.join(
     output_dir, subject_data.subject_id)
 
 
-
 """preprocess the data"""
 results = do_subjects_preproc(
     [subject_data],
@@ -76,7 +75,7 @@ results = do_subjects_preproc(
     dataset_id="FSL FEEDS single-subject",
     dataset_description=DATASET_DESCRIPTION,
     do_shutdown_reloaders=False,
-    )
+)
 
 """collect preprocessed data"""
 fmri_files = results[0]['func']
@@ -87,7 +86,7 @@ _, matrix, names = check_design_matrix(design_matrix)
 contrasts = {}
 n_columns = len(names)
 I = np.eye(len(names))
-for i in xrange(2):
+for i in range(2):
     contrasts['%s' % names[2 * i]] = I[2 * i]
 
 """more interesting contrasts"""
@@ -118,7 +117,7 @@ for contrast_id, contrast_val in contrasts.items():
         output_stat=True,
         output_effects=True,
         output_variance=True,
-        )
+    )
 
     # store stat maps to disk
     for dtype, out_map in zip(['z', 't', 'effects', 'variance'],
@@ -163,7 +162,7 @@ generate_subject_stats_report(
     drift_model=drift_model,
     hrf_model=hrf_model,
     slicer='z'
-    )
+)
 
 # shutdown main report page
 ProgressReport().finish_dir(output_dir)

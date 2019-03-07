@@ -46,21 +46,21 @@ def multi_session_time_slice_diffs(img_list):
                 results[key] = val if key != 'session_length' else [val]
         else:
             results['volume_mean_diff2'] = np.hstack((
-                    results['volume_mean_diff2'],
-                    results_['volume_mean_diff2']))
+                results['volume_mean_diff2'],
+                results_['volume_mean_diff2']))
             results['slice_mean_diff2'] = np.vstack((
-                    results['slice_mean_diff2'],
-                    results_['slice_mean_diff2']))
+                results['slice_mean_diff2'],
+                results_['slice_mean_diff2']))
             results['volume_means'] = np.hstack((
-                    results['volume_means'],
-                    results_['volume_means']))
+                results['volume_means'],
+                results_['volume_means']))
             results['diff2_mean_vol'] = mean_img(
                 [results['diff2_mean_vol'], results_['diff2_mean_vol']])
             results['slice_diff2_max_vol'] = nib.Nifti1Image(
                 np.maximum(results_['slice_diff2_max_vol'].get_data(),
                            results['slice_diff2_max_vol'].get_data()),
                 results['slice_diff2_max_vol'].get_affine()
-                )
+            )
             results['session_length'].append(results_['session_length'])
     return results
 
@@ -230,11 +230,9 @@ def plot_tsdiffs(results, use_same_figure=True):
 
     # slice plots min max mean
     ax = next(iter_axes)
-    ax.hold(True)
     ax.plot(np.mean(scaled_slice_diff, 0), 'k')
     ax.plot(np.min(scaled_slice_diff, 0), 'b')
     ax.plot(np.max(scaled_slice_diff, 0), 'r')
-    ax.hold(False)
     xmax_labels(ax, S + 1, 'Slice number',
                 'Max/mean/min \n slice variation')
 

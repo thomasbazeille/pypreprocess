@@ -173,6 +173,8 @@ def _do_subject_slice_timing(subject_data, TR, TA=None, spm_dir=None,
         slice_order = np.array(slice_order) - 1
     slice_order = get_slice_indices(nslices, slice_order=slice_order,
                                     interleaved=interleaved)
+    slice_order = slice_order.astype('float64')
+    
 
     # use pure python (pp) code ?
     if software == "python":

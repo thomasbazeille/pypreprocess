@@ -73,7 +73,7 @@ def get_slice_indices(n_slices, slice_order='ascending',
 
         slice_indices = slice_order
 
-    slice_indices = np.array(slice_indices)
+    slice_indices = np.array(slice_indices, dtype='int')
     if return_final:
         slice_indices = np.array([np.nonzero(slice_indices == z)[0][0]
                                   for z in range(n_slices)])

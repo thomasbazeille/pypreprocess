@@ -86,7 +86,7 @@ def _save_img(img, filename):
 
 def _make_sd(func_filenames=None, anat_filename=None, ext=".nii.gz",
              n_sessions=1, make_sess_dirs=False, func_ndim=4,
-             unique_func_names=False, output_dir="/tmp/titi"):
+             unique_func_names=False, output_dir="home/parietal/jtorretr/tmp/titi"):
     if not func_filenames is None:
         n_sessions = len(func_filenames)
     func = [create_random_image(ndim=func_ndim) for _ in range(n_sessions)]
